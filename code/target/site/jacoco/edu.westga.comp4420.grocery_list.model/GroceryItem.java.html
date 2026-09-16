@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GroceryItem.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Grocery-List-App</a> &gt; <a href="index.source.html" class="el_package">edu.westga.comp4420.grocery_list.model</a> &gt; <span class="el_source">GroceryItem.java</span></div><h1>GroceryItem.java</h1><pre class="source lang-java linenums">package edu.westga.comp4420.grocery_list.model;
+
+/**
+ * Stores basic information for a single item in a grocery list.
+ *
+ * @author	Comp 4420
+ * @version Spring 2025
+ */
+public final class GroceryItem {   
+
+	private final String name;
+	private final int amountInCart;
+	private final int amountNeeded;
+	
+	/**
+	 * Create and initialize a new grocery item with the provided information.
+	 * 
+	 * @precondition name != null &amp;&amp;
+	 *				 !name.isEmpty() &amp;&amp;
+	 * 				 amountNeeded &gt; 0 &amp;&amp;
+	 * 				 amountInCart &gt;= 0
+	 * @postcondition getName() == name &amp;&amp;
+	 * 				  getAmountNeeded() == amountNeeded &amp;&amp;
+	 * 				  getAmountInCart() == amountInCart
+	 * 
+	 * @param name the name for the new grocery item
+	 * @param amountNeeded the amount needed to be purchased for the new grocery item
+	 * @param amountInCart the amount currently in the cart for the new grocery item
+	 */
+<span class="fc" id="L30">	public GroceryItem(String name, int amountNeeded, int amountInCart) {</span>
+<span class="fc bfc" id="L31" title="All 2 branches covered.">		if (name == null) {</span>
+<span class="fc" id="L32">			throw new IllegalArgumentException(&quot;Must provide a name, but name was null.&quot;);</span>
+		}
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		if (name.isEmpty()) {</span>
+<span class="fc" id="L35">			throw new IllegalArgumentException(&quot;Must provide a name with at least one character.&quot;);</span>
+		}
+<span class="fc bfc" id="L37" title="All 2 branches covered.">		if (amountNeeded &lt;= 0) {</span>
+<span class="fc" id="L38">			throw new IllegalArgumentException(&quot;Must provide a positive value for amount needed.&quot;);</span>
+		}
+<span class="fc bfc" id="L40" title="All 2 branches covered.">		if (amountInCart &lt; 0) {</span>
+<span class="fc" id="L41">			throw new IllegalArgumentException(&quot;Must provide a non-negative value for amount in cart.&quot;);</span>
+		}
+<span class="fc" id="L43">		this.name = name;</span>
+<span class="fc" id="L44">		this.amountNeeded = amountNeeded;</span>
+<span class="fc" id="L45">		this.amountInCart = amountInCart;</span>
+<span class="fc" id="L46">	}</span>
+	
+	/**
+	 * Return the name for the grocery item.
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the name for the new grocery item
+	 */
+	public String getName() {
+<span class="fc" id="L57">		return this.name;</span>
+	}
+	
+	/**
+	 * Return the amount needed to be purchased for the new grocery item
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the amount needed to be purchased for the new grocery item
+	 */
+	public int getAmountNeeded() {
+<span class="fc" id="L69">		return this.amountNeeded;</span>
+	}
+	
+	/**
+	 * Return the amount currently in the cart for the new grocery item
+	 * 
+	 * @precondition none
+	 * @postcondition none
+	 * 
+	 * @return the amount currently in the cart for the new grocery item
+	 */
+	public int getAmountInCart() {
+<span class="fc" id="L81">		return this.amountInCart;</span>
+	}
+	
+	@Override
+	public String toString() {
+<span class="nc" id="L86">		return this.name + &quot;(&quot; + this.amountInCart + &quot;/&quot; + this.amountNeeded + &quot;)&quot;;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

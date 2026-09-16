@@ -1,0 +1,5 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+Grocery-List-App,edu.westga.comp4420.grocery_list.view.codebehind,AddItemWindow,106,0,14,0,26,0,14,0,7,0
+Grocery-List-App,edu.westga.comp4420.grocery_list.view.codebehind,MainWindow,106,0,12,0,26,0,11,0,5,0
+Grocery-List-App,edu.westga.comp4420.grocery_list.model,GroceryItem,8,50,0,8,1,16,1,8,1,4
+Grocery-List-App,edu.westga.comp4420.grocery_list,Main,27,0,0,0,9,0,3,0,3,0
