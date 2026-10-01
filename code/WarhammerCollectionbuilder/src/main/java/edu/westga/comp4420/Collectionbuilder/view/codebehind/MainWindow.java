@@ -1,10 +1,15 @@
 package edu.westga.comp4420.Collectionbuilder.view.codebehind;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import edu.westga.comp4420.Collectionbuilder.Main;
 import edu.westga.comp4420.Collectionbuilder.model.FactionList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -14,6 +19,8 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * Handles the faction-list home page.
@@ -23,11 +30,13 @@ import javafx.scene.layout.GridPane;
 public class MainWindow {
 	@FXML private ListView<FactionList> factionLists;
 	@FXML private Button deleteListButton;
+	@FXML private Button openListButton;
 
 	@FXML
 	void initialize() {
 		assert this.factionLists != null : "fx:id=\"factionLists\" was not injected.";
 		assert this.deleteListButton != null : "fx:id=\"deleteListButton\" was not injected.";
+		assert this.openListButton != null : "fx:id=\"openListButton\" was not injected.";
 		this.factionLists.setCellFactory(listView -> new ListCell<>() {
 			@Override
 			protected void updateItem(FactionList factionList, boolean empty) {
@@ -43,6 +52,8 @@ public class MainWindow {
 		});
 		this.deleteListButton.disableProperty().bind(
 				this.factionLists.getSelectionModel().selectedItemProperty().isNull());
+		this.openListButton.disableProperty().bind(
+				this.factionLists.getSelectionModel().selectedItemProperty().isNull());
 	}
 
 	@FXML
@@ -57,6 +68,28 @@ public class MainWindow {
 		FactionList selectedList = this.factionLists.getSelectionModel().getSelectedItem();
 		if (selectedList != null) {
 			this.factionLists.getItems().remove(selectedList);
+		}
+	}
+
+	@FXML
+	void openList() {
+		FactionList selectedList = this.factionLists.getSelectionModel().getSelectedItem();
+		if (selectedList == null) {
+			return;
+		}
+		try {
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource(Main.FACTION_LIST_WINDOW_RESOURCE));
+			Parent parent = loader.load();
+			FactionListWindow controller = loader.getController();
+			controller.setFactionList(selectedList);
+			Stage stage = new Stage();
+			stage.setTitle(selectedList.getTitle());
+			stage.initOwner(this.factionLists.getScene().getWindow());
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setScene(new Scene(parent));
+			stage.showAndWait();
+		} catch (IOException error) {
+			new Alert(Alert.AlertType.ERROR, "Unable to open faction list.").showAndWait();
 		}
 	}
 

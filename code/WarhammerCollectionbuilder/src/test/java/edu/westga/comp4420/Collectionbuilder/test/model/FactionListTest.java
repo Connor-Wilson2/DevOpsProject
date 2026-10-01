@@ -25,6 +25,7 @@ class FactionListTest {
 		assertEquals("Space Marines", factionList.getFaction());
 		assertEquals("Ultramarines", factionList.getSubFaction());
 		assertTrue(factionList.getUnits().isEmpty());
+		assertEquals(0, factionList.getTotalPoints());
 	}
 
 	@Test
@@ -37,8 +38,10 @@ class FactionListTest {
 		List<Unit> units = factionList.getUnits();
 		assertEquals(1, units.size());
 		assertEquals(unit, units.get(0));
+		assertEquals(100, factionList.getTotalPoints());
 		assertThrows(UnsupportedOperationException.class, () -> units.add(unit));
 		assertTrue(factionList.removeUnit(unit));
+		assertEquals(0, factionList.getTotalPoints());
 		assertFalse(factionList.removeUnit(unit));
 		assertThrows(NullPointerException.class, () -> factionList.addUnit(null));
 		assertThrows(NullPointerException.class, () -> factionList.removeUnit(null));

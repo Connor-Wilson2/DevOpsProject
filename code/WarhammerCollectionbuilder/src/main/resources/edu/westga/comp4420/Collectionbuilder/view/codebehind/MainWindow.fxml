@@ -49,7 +49,9 @@
          <padding>
             <Insets top="8.0" right="26.0" bottom="22.0" left="26.0" />
          </padding>
-         <Button fx:id="deleteListButton" mnemonicParsing="false" onAction="#deleteList"
+          <Button fx:id="openListButton" mnemonicParsing="false" onAction="#openList"
+             text="Open list" style="-fx-background-color: #d2a36b; -fx-text-fill: #26352f;" />
+          <Button fx:id="deleteListButton" mnemonicParsing="false" onAction="#deleteList"
                  text="Delete list" style="-fx-background-color: #e1e4df; -fx-text-fill: #26352f;" />
          <Button mnemonicParsing="false" onAction="#createList" text="Create list"
                  style="-fx-background-color: #a45135; -fx-text-fill: white; -fx-font-weight: bold;" />

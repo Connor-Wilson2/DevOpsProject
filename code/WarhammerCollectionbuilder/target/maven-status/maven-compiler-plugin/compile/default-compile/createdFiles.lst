@@ -1,5 +1,7 @@
-edu\westga\comp4420\Collectionbuilder\model\Unit.class
+edu\westga\comp4420\Collectionbuilder\view\codebehind\FactionListWindow.class
+edu\westga\comp4420\Collectionbuilder\view\codebehind\FactionListWindow$1.class
 edu\westga\comp4420\Collectionbuilder\view\codebehind\MainWindow$1.class
 edu\westga\comp4420\Collectionbuilder\view\codebehind\MainWindow.class
-edu\westga\comp4420\Collectionbuilder\Main.class
 edu\westga\comp4420\Collectionbuilder\model\FactionList.class
+edu\westga\comp4420\Collectionbuilder\model\Unit.class
+edu\westga\comp4420\Collectionbuilder\Main.class

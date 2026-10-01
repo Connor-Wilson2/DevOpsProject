@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>MainWindow.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Grocery-List-App</a> &gt; <a href="index.source.html" class="el_package">edu.westga.comp4420.Collectionbuilder.view.codebehind</a> &gt; <span class="el_source">MainWindow.java</span></div><h1>MainWindow.java</h1><pre class="source lang-java linenums">package edu.westga.comp4420.Collectionbuilder.view.codebehind;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.Optional;
 
+import edu.westga.comp4420.Collectionbuilder.Main;
 import edu.westga.comp4420.Collectionbuilder.model.FactionList;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -14,91 +19,119 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * Handles the faction-list home page.
  *
  * @author Comp 4420
  */
-<span class="nc bnc" id="L23" title="All 2 branches missed.">public class MainWindow {</span>
+<span class="nc bnc" id="L30" title="All 2 branches missed.">public class MainWindow {</span>
 	@FXML private ListView&lt;FactionList&gt; factionLists;
 	@FXML private Button deleteListButton;
+	@FXML private Button openListButton;
 
 	@FXML
 	void initialize() {
-<span class="nc bnc" id="L29" title="All 4 branches missed.">		assert this.factionLists != null : &quot;fx:id=\&quot;factionLists\&quot; was not injected.&quot;;</span>
-<span class="nc bnc" id="L30" title="All 4 branches missed.">		assert this.deleteListButton != null : &quot;fx:id=\&quot;deleteListButton\&quot; was not injected.&quot;;</span>
-<span class="nc" id="L31">		this.factionLists.setCellFactory(listView -&gt; new ListCell&lt;&gt;() {</span>
+<span class="nc bnc" id="L37" title="All 4 branches missed.">		assert this.factionLists != null : &quot;fx:id=\&quot;factionLists\&quot; was not injected.&quot;;</span>
+<span class="nc bnc" id="L38" title="All 4 branches missed.">		assert this.deleteListButton != null : &quot;fx:id=\&quot;deleteListButton\&quot; was not injected.&quot;;</span>
+<span class="nc bnc" id="L39" title="All 4 branches missed.">		assert this.openListButton != null : &quot;fx:id=\&quot;openListButton\&quot; was not injected.&quot;;</span>
+<span class="nc" id="L40">		this.factionLists.setCellFactory(listView -&gt; new ListCell&lt;&gt;() {</span>
 			@Override
 			protected void updateItem(FactionList factionList, boolean empty) {
-<span class="nc" id="L34">				super.updateItem(factionList, empty);</span>
-<span class="nc bnc" id="L35" title="All 4 branches missed.">				if (empty || factionList == null) {</span>
-<span class="nc" id="L36">					this.setText(null);</span>
+<span class="nc" id="L43">				super.updateItem(factionList, empty);</span>
+<span class="nc bnc" id="L44" title="All 4 branches missed.">				if (empty || factionList == null) {</span>
+<span class="nc" id="L45">					this.setText(null);</span>
 				} else {
-<span class="nc" id="L38">					this.setText(factionList.getTitle() + &quot;  |  &quot; + factionList.getFaction()</span>
-<span class="nc" id="L39">							+ &quot; / &quot; + factionList.getSubFaction() + &quot;  |  &quot;</span>
-<span class="nc" id="L40">							+ factionList.getDateCreated());</span>
+<span class="nc" id="L47">					this.setText(factionList.getTitle() + &quot;  |  &quot; + factionList.getFaction()</span>
+<span class="nc" id="L48">							+ &quot; / &quot; + factionList.getSubFaction() + &quot;  |  &quot;</span>
+<span class="nc" id="L49">							+ factionList.getDateCreated());</span>
 				}
-<span class="nc" id="L42">			}</span>
+<span class="nc" id="L51">			}</span>
 		});
-<span class="nc" id="L44">		this.deleteListButton.disableProperty().bind(</span>
-<span class="nc" id="L45">				this.factionLists.getSelectionModel().selectedItemProperty().isNull());</span>
-<span class="nc" id="L46">	}</span>
+<span class="nc" id="L53">		this.deleteListButton.disableProperty().bind(</span>
+<span class="nc" id="L54">				this.factionLists.getSelectionModel().selectedItemProperty().isNull());</span>
+<span class="nc" id="L55">		this.openListButton.disableProperty().bind(</span>
+<span class="nc" id="L56">				this.factionLists.getSelectionModel().selectedItemProperty().isNull());</span>
+<span class="nc" id="L57">	}</span>
 
 	@FXML
 	void createList() {
-<span class="nc" id="L50">		Dialog&lt;FactionList&gt; dialog = this.createListDialog();</span>
-<span class="nc" id="L51">		Optional&lt;FactionList&gt; result = dialog.showAndWait();</span>
-<span class="nc" id="L52">		result.ifPresent(this.factionLists.getItems()::add);</span>
-<span class="nc" id="L53">	}</span>
+<span class="nc" id="L61">		Dialog&lt;FactionList&gt; dialog = this.createListDialog();</span>
+<span class="nc" id="L62">		Optional&lt;FactionList&gt; result = dialog.showAndWait();</span>
+<span class="nc" id="L63">		result.ifPresent(this.factionLists.getItems()::add);</span>
+<span class="nc" id="L64">	}</span>
 
 	@FXML
 	void deleteList() {
-<span class="nc" id="L57">		FactionList selectedList = this.factionLists.getSelectionModel().getSelectedItem();</span>
-<span class="nc bnc" id="L58" title="All 2 branches missed.">		if (selectedList != null) {</span>
-<span class="nc" id="L59">			this.factionLists.getItems().remove(selectedList);</span>
+<span class="nc" id="L68">		FactionList selectedList = this.factionLists.getSelectionModel().getSelectedItem();</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">		if (selectedList != null) {</span>
+<span class="nc" id="L70">			this.factionLists.getItems().remove(selectedList);</span>
 		}
-<span class="nc" id="L61">	}</span>
+<span class="nc" id="L72">	}</span>
+
+	@FXML
+	void openList() {
+<span class="nc" id="L76">		FactionList selectedList = this.factionLists.getSelectionModel().getSelectedItem();</span>
+<span class="nc bnc" id="L77" title="All 2 branches missed.">		if (selectedList == null) {</span>
+<span class="nc" id="L78">			return;</span>
+		}
+		try {
+<span class="nc" id="L81">			FXMLLoader loader = new FXMLLoader(Main.class.getResource(Main.FACTION_LIST_WINDOW_RESOURCE));</span>
+<span class="nc" id="L82">			Parent parent = loader.load();</span>
+<span class="nc" id="L83">			FactionListWindow controller = loader.getController();</span>
+<span class="nc" id="L84">			controller.setFactionList(selectedList);</span>
+<span class="nc" id="L85">			Stage stage = new Stage();</span>
+<span class="nc" id="L86">			stage.setTitle(selectedList.getTitle());</span>
+<span class="nc" id="L87">			stage.initOwner(this.factionLists.getScene().getWindow());</span>
+<span class="nc" id="L88">			stage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L89">			stage.setScene(new Scene(parent));</span>
+<span class="nc" id="L90">			stage.showAndWait();</span>
+<span class="nc" id="L91">		} catch (IOException error) {</span>
+<span class="nc" id="L92">			new Alert(Alert.AlertType.ERROR, &quot;Unable to open faction list.&quot;).showAndWait();</span>
+<span class="nc" id="L93">		}</span>
+<span class="nc" id="L94">	}</span>
 
 	private Dialog&lt;FactionList&gt; createListDialog() {
-<span class="nc" id="L64">		Dialog&lt;FactionList&gt; dialog = new Dialog&lt;&gt;();</span>
-<span class="nc" id="L65">		dialog.setTitle(&quot;Create Faction List&quot;);</span>
-<span class="nc" id="L66">		dialog.setHeaderText(&quot;Enter the list details&quot;);</span>
-<span class="nc" id="L67">		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);</span>
-<span class="nc" id="L68">		GridPane form = this.createListForm();</span>
-<span class="nc" id="L69">		dialog.getDialogPane().setContent(form);</span>
-<span class="nc" id="L70">		dialog.setResultConverter(button -&gt; this.createListResult(button, form));</span>
-<span class="nc" id="L71">		return dialog;</span>
+<span class="nc" id="L97">		Dialog&lt;FactionList&gt; dialog = new Dialog&lt;&gt;();</span>
+<span class="nc" id="L98">		dialog.setTitle(&quot;Create Faction List&quot;);</span>
+<span class="nc" id="L99">		dialog.setHeaderText(&quot;Enter the list details&quot;);</span>
+<span class="nc" id="L100">		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);</span>
+<span class="nc" id="L101">		GridPane form = this.createListForm();</span>
+<span class="nc" id="L102">		dialog.getDialogPane().setContent(form);</span>
+<span class="nc" id="L103">		dialog.setResultConverter(button -&gt; this.createListResult(button, form));</span>
+<span class="nc" id="L104">		return dialog;</span>
 	}
 
 	private GridPane createListForm() {
-<span class="nc" id="L75">		GridPane form = new GridPane();</span>
-<span class="nc" id="L76">		form.setHgap(10);</span>
-<span class="nc" id="L77">		form.setVgap(10);</span>
-<span class="nc" id="L78">		form.add(new Label(&quot;Title&quot;), 0, 0);</span>
-<span class="nc" id="L79">		form.add(new TextField(), 1, 0);</span>
-<span class="nc" id="L80">		form.add(new Label(&quot;Faction&quot;), 0, 1);</span>
-<span class="nc" id="L81">		form.add(new TextField(), 1, 1);</span>
-<span class="nc" id="L82">		form.add(new Label(&quot;Subfaction&quot;), 0, 2);</span>
-<span class="nc" id="L83">		form.add(new TextField(), 1, 2);</span>
-<span class="nc" id="L84">		return form;</span>
+<span class="nc" id="L108">		GridPane form = new GridPane();</span>
+<span class="nc" id="L109">		form.setHgap(10);</span>
+<span class="nc" id="L110">		form.setVgap(10);</span>
+<span class="nc" id="L111">		form.add(new Label(&quot;Title&quot;), 0, 0);</span>
+<span class="nc" id="L112">		form.add(new TextField(), 1, 0);</span>
+<span class="nc" id="L113">		form.add(new Label(&quot;Faction&quot;), 0, 1);</span>
+<span class="nc" id="L114">		form.add(new TextField(), 1, 1);</span>
+<span class="nc" id="L115">		form.add(new Label(&quot;Subfaction&quot;), 0, 2);</span>
+<span class="nc" id="L116">		form.add(new TextField(), 1, 2);</span>
+<span class="nc" id="L117">		return form;</span>
 	}
 
 	private FactionList createListResult(ButtonType button, GridPane form) {
-<span class="nc bnc" id="L88" title="All 2 branches missed.">		if (button != ButtonType.OK) {</span>
-<span class="nc" id="L89">			return null;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (button != ButtonType.OK) {</span>
+<span class="nc" id="L122">			return null;</span>
 		}
 		try {
-<span class="nc" id="L92">			return new FactionList(this.getFieldText(form, 0), LocalDate.now(),</span>
-<span class="nc" id="L93">					this.getFieldText(form, 1), this.getFieldText(form, 2));</span>
-<span class="nc" id="L94">		} catch (IllegalArgumentException error) {</span>
-<span class="nc" id="L95">			new Alert(Alert.AlertType.ERROR, error.getMessage()).showAndWait();</span>
-<span class="nc" id="L96">			return null;</span>
+<span class="nc" id="L125">			return new FactionList(this.getFieldText(form, 0), LocalDate.now(),</span>
+<span class="nc" id="L126">					this.getFieldText(form, 1), this.getFieldText(form, 2));</span>
+<span class="nc" id="L127">		} catch (IllegalArgumentException error) {</span>
+<span class="nc" id="L128">			new Alert(Alert.AlertType.ERROR, error.getMessage()).showAndWait();</span>
+<span class="nc" id="L129">			return null;</span>
 		}
 	}
 
 	private String getFieldText(GridPane form, int row) {
-<span class="nc" id="L101">		return ((TextField) form.getChildren().get(row * 2 + 1)).getText();</span>
+<span class="nc" id="L134">		return ((TextField) form.getChildren().get(row * 2 + 1)).getText();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

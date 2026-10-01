@@ -102,6 +102,15 @@ public class FactionList {
 		return this.units.remove(Objects.requireNonNull(unit, "unit"));
 	}
 
+	/**
+	 * Gets the combined point value of all units in this list.
+	 *
+	 * @return the total points for this list
+	 */
+	public int getTotalPoints() {
+		return this.units.stream().mapToInt(Unit::getPointValue).sum();
+	}
+
 	private static String requireText(String value, String fieldName) {
 		Objects.requireNonNull(value, fieldName);
 		if (value.trim().isEmpty()) {

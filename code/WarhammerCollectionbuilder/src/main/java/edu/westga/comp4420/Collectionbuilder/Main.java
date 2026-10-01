@@ -17,6 +17,7 @@ import javafx.scene.Scene;
 public class Main extends Application {
 	public static final String WINDOW_TITLE = "JavaFX Sample";
 	public static final String MAIN_WINDOW_RESOURCE = "view/codebehind/MainWindow.fxml";
+	public static final String FACTION_LIST_WINDOW_RESOURCE = "view/codebehind/FactionListWindow.fxml";
 
 	/**
 	 * JavaFX entry point.
