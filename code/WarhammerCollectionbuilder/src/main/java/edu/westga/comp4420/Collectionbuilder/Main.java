@@ -1,4 +1,4 @@
-package edu.westga.comp4420.grocery_list;
+package edu.westga.comp4420.Collectionbuilder;
 
 import java.io.IOException;
 
@@ -17,7 +17,6 @@ import javafx.scene.Scene;
 public class Main extends Application {
 	public static final String WINDOW_TITLE = "JavaFX Sample";
 	public static final String MAIN_WINDOW_RESOURCE = "view/codebehind/MainWindow.fxml";
-	public static final String ADD_ITEM_WINDOW_RESOURCE = "view/codebehind/AddItemWindow.fxml";
 
 	/**
 	 * JavaFX entry point.

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane minHeight="360.0" minWidth="480.0" prefHeight="520.0" prefWidth="760.0"
+            style="-fx-background-color: #f1f2ed;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.westga.comp4420.Collectionbuilder.view.codebehind.MainWindow">
+   <top>
+      <VBox spacing="6.0" style="-fx-background-color: #26352f;">
+         <padding>
+            <Insets top="22.0" right="26.0" bottom="20.0" left="26.0" />
+         </padding>
+         <Label text="FACTION COLLECTIONS" textFill="#d2a36b">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <Label text="Your army lists" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="26.0" />
+            </font>
+         </Label>
+      </VBox>
+   </top>
+   <center>
+      <VBox spacing="10.0">
+         <padding>
+            <Insets top="22.0" right="26.0" bottom="12.0" left="26.0" />
+         </padding>
+         <Label text="SAVED LISTS" textFill="#52645b">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <ListView fx:id="factionLists" VBox.vgrow="ALWAYS"
+                   style="-fx-background-color: white; -fx-border-color: #d7dbd4; -fx-border-radius: 3;" />
+      </VBox>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" spacing="10.0">
+         <padding>
+            <Insets top="8.0" right="26.0" bottom="22.0" left="26.0" />
+         </padding>
+         <Button fx:id="deleteListButton" mnemonicParsing="false" onAction="#deleteList"
+                 text="Delete list" style="-fx-background-color: #e1e4df; -fx-text-fill: #26352f;" />
+         <Button mnemonicParsing="false" onAction="#createList" text="Create list"
+                 style="-fx-background-color: #a45135; -fx-text-fill: white; -fx-font-weight: bold;" />
+      </HBox>
+   </bottom>
+</BorderPane>

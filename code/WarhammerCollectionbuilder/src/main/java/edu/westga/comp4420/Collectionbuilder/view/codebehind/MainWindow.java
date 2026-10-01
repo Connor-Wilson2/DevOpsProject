@@ -1,67 +1,103 @@
-package edu.westga.comp4420.grocery_list.view.codebehind;
+package edu.westga.comp4420.Collectionbuilder.view.codebehind;
 
-import javafx.event.ActionEvent;
+import java.time.LocalDate;
+import java.util.Optional;
+
+import edu.westga.comp4420.Collectionbuilder.model.FactionList;
 import javafx.fxml.FXML;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.AnchorPane;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import javafx.stage.Modality;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-
-import java.io.IOException;
-
-import edu.westga.comp4420.grocery_list.model.GroceryItem;
-import edu.westga.comp4420.grocery_list.Main;
+import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 
 /**
- * CodeBehind To Handle Processing for the MainWindow
+ * Handles the faction-list home page.
  *
- * @author	Comp 4420
- * @version Spring 2025
+ * @author Comp 4420
  */
-public class MainWindow {   
-	@FXML private ListView<GroceryItem> groceryItems;
-	@FXML private AnchorPane guiPane;
+public class MainWindow {
+	@FXML private ListView<FactionList> factionLists;
+	@FXML private Button deleteListButton;
 
-	@FXML
-	void addItem(ActionEvent event) {
-		try {
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(Main.class.getResource(Main.ADD_ITEM_WINDOW_RESOURCE));
-			loader.load();
-			Parent parent = loader.getRoot();
-			Scene scene = new Scene(parent);
-			Stage addItemStage = new Stage();
-			addItemStage.setTitle(Main.WINDOW_TITLE);
-			addItemStage.setScene(scene);
-			addItemStage.initModality(Modality.APPLICATION_MODAL);
-
-			AddItemWindow controller = (AddItemWindow) loader.getController();
-			controller.setItemList(this.groceryItems.getItems());
-
-			addItemStage.showAndWait();
-		} catch (IOException error) {
-			Alert errorBox = new Alert(AlertType.ERROR);
-			errorBox.setContentText("Unable to open add window");
-			errorBox.showAndWait();
-		}
-	}
-
-	@FXML
-	void removeItem(ActionEvent event) {
-		GroceryItem selectedItem = this.groceryItems.getSelectionModel().getSelectedItem();
-		if (selectedItem != null) {
-			this.groceryItems.getItems().remove(selectedItem);
-		}
-	}
-	
 	@FXML
 	void initialize() {
-		assert this.groceryItems != null : "fx:id=\"groceryItems\" was not injected: check your FXML file 'MainWindow.fxml'.";
-		assert this.guiPane != null : "fx:id=\"guiPane\" was not injected: check your FXML file 'MainWindow.fxml'.";
+		assert this.factionLists != null : "fx:id=\"factionLists\" was not injected.";
+		assert this.deleteListButton != null : "fx:id=\"deleteListButton\" was not injected.";
+		this.factionLists.setCellFactory(listView -> new ListCell<>() {
+			@Override
+			protected void updateItem(FactionList factionList, boolean empty) {
+				super.updateItem(factionList, empty);
+				if (empty || factionList == null) {
+					this.setText(null);
+				} else {
+					this.setText(factionList.getTitle() + "  |  " + factionList.getFaction()
+							+ " / " + factionList.getSubFaction() + "  |  "
+							+ factionList.getDateCreated());
+				}
+			}
+		});
+		this.deleteListButton.disableProperty().bind(
+				this.factionLists.getSelectionModel().selectedItemProperty().isNull());
+	}
+
+	@FXML
+	void createList() {
+		Dialog<FactionList> dialog = this.createListDialog();
+		Optional<FactionList> result = dialog.showAndWait();
+		result.ifPresent(this.factionLists.getItems()::add);
+	}
+
+	@FXML
+	void deleteList() {
+		FactionList selectedList = this.factionLists.getSelectionModel().getSelectedItem();
+		if (selectedList != null) {
+			this.factionLists.getItems().remove(selectedList);
+		}
+	}
+
+	private Dialog<FactionList> createListDialog() {
+		Dialog<FactionList> dialog = new Dialog<>();
+		dialog.setTitle("Create Faction List");
+		dialog.setHeaderText("Enter the list details");
+		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+		GridPane form = this.createListForm();
+		dialog.getDialogPane().setContent(form);
+		dialog.setResultConverter(button -> this.createListResult(button, form));
+		return dialog;
+	}
+
+	private GridPane createListForm() {
+		GridPane form = new GridPane();
+		form.setHgap(10);
+		form.setVgap(10);
+		form.add(new Label("Title"), 0, 0);
+		form.add(new TextField(), 1, 0);
+		form.add(new Label("Faction"), 0, 1);
+		form.add(new TextField(), 1, 1);
+		form.add(new Label("Subfaction"), 0, 2);
+		form.add(new TextField(), 1, 2);
+		return form;
+	}
+
+	private FactionList createListResult(ButtonType button, GridPane form) {
+		if (button != ButtonType.OK) {
+			return null;
+		}
+		try {
+			return new FactionList(this.getFieldText(form, 0), LocalDate.now(),
+					this.getFieldText(form, 1), this.getFieldText(form, 2));
+		} catch (IllegalArgumentException error) {
+			new Alert(Alert.AlertType.ERROR, error.getMessage()).showAndWait();
+			return null;
+		}
+	}
+
+	private String getFieldText(GridPane form, int row) {
+		return ((TextField) form.getChildren().get(row * 2 + 1)).getText();
 	}
 }
