@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle version="9.3">
+<file name="C:\Users\gnomi\OneDrive\Desktop\DevOpsProject\code\WarhammerCollectionbuilder\src\main\java\edu\westga\comp4420\Collectionbuilder\Main.java">
+</file>
+<file name="C:\Users\gnomi\OneDrive\Desktop\DevOpsProject\code\WarhammerCollectionbuilder\src\main\java\edu\westga\comp4420\Collectionbuilder\model\FactionList.java">
+</file>
+<file name="C:\Users\gnomi\OneDrive\Desktop\DevOpsProject\code\WarhammerCollectionbuilder\src\main\java\edu\westga\comp4420\Collectionbuilder\model\Unit.java">
+</file>
+<file name="C:\Users\gnomi\OneDrive\Desktop\DevOpsProject\code\WarhammerCollectionbuilder\src\main\java\edu\westga\comp4420\Collectionbuilder\view\codebehind\FactionListWindow.java">
+</file>
+<file name="C:\Users\gnomi\OneDrive\Desktop\DevOpsProject\code\WarhammerCollectionbuilder\src\main\java\edu\westga\comp4420\Collectionbuilder\view\codebehind\MainWindow.java">
+</file>
+</checkstyle>
