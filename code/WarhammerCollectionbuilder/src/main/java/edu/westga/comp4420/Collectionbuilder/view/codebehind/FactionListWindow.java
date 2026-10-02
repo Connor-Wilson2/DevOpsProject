@@ -1,26 +1,25 @@
 package edu.westga.comp4420.Collectionbuilder.view.codebehind;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
+import edu.westga.comp4420.Collectionbuilder.Main;
 import edu.westga.comp4420.Collectionbuilder.model.FactionList;
 import edu.westga.comp4420.Collectionbuilder.model.Unit;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.scene.control.Label;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * Displays and edits the units in a faction list.
@@ -83,11 +82,23 @@ public class FactionListWindow {
 
 	@FXML
 	void addUnit() {
-		Optional<Unit> result = this.createUnitDialog().showAndWait();
-		result.ifPresent(unit -> {
-			this.factionList.addUnit(unit);
-			this.refreshUnits();
-		});
+		try {
+			FXMLLoader loader = new FXMLLoader(Main.class.getResource(Main.ADD_UNIT_WINDOW_RESOURCE));
+			Parent parent = loader.load();
+			Stage stage = new Stage();
+			stage.setTitle("Add Unit");
+			stage.initOwner(this.units.getScene().getWindow());
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setScene(new Scene(parent));
+			stage.showAndWait();
+			Unit newUnit = loader.<AddUnitWindow>getController().getCreatedUnit();
+			if (newUnit != null) {
+				this.factionList.addUnit(newUnit);
+				this.refreshUnits();
+			}
+		} catch (IOException error) {
+			new Alert(Alert.AlertType.ERROR, "Unable to open the add-unit window.").showAndWait();
+		}
 	}
 
 	@FXML
@@ -104,70 +115,4 @@ public class FactionListWindow {
 		this.pointsTotal.setText("Total: " + this.factionList.getTotalPoints() + " points");
 	}
 
-	private Dialog<Unit> createUnitDialog() {
-		Dialog<Unit> dialog = new Dialog<>();
-		dialog.setTitle("Add Unit");
-		dialog.setHeaderText("Enter the unit details");
-		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-		GridPane form = this.createUnitForm();
-		dialog.getDialogPane().setContent(form);
-		dialog.setResultConverter(button -> this.createUnitResult(button, form));
-		return dialog;
-	}
-
-	private GridPane createUnitForm() {
-		GridPane form = new GridPane();
-		form.setHgap(10);
-		form.setVgap(10);
-		this.addTextField(form, "Name", 0);
-		this.addTextField(form, "Unit type", 1);
-		this.addTextField(form, "Point value", 2);
-		this.addTextField(form, "Model count", 3);
-		this.addTextField(form, "Wargear options", 4);
-		return form;
-	}
-
-	private void addTextField(GridPane form, String labelText, int row) {
-		form.add(new Label(labelText), 0, row);
-		form.add(new TextField(), 1, row);
-	}
-
-	private Unit createUnitResult(ButtonType button, GridPane form) {
-		if (button != ButtonType.OK) {
-			return null;
-		}
-		try {
-			return this.buildUnit(form);
-		} catch (NumberFormatException error) {
-			new Alert(Alert.AlertType.ERROR, "Point value and model count must be whole numbers.")
-					.showAndWait();
-			return null;
-		} catch (IllegalArgumentException error) {
-			new Alert(Alert.AlertType.ERROR, error.getMessage()).showAndWait();
-			return null;
-		}
-	}
-
-	private Unit buildUnit(GridPane form) {
-		String name = this.getFieldText(form, 0);
-		String unitType = this.getFieldText(form, 1);
-		int pointValue = Integer.parseInt(this.getFieldText(form, 2).trim());
-		int modelCount = Integer.parseInt(this.getFieldText(form, 3).trim());
-		List<String> wargearOptions = this.parseWargearOptions(this.getFieldText(form, 4));
-		return new Unit(name, unitType, pointValue, modelCount, wargearOptions);
-	}
-
-	private List<String> parseWargearOptions(String text) {
-		if (text.trim().isEmpty()) {
-			return new ArrayList<>();
-		}
-		return Arrays.stream(text.split(","))
-				.map(String::trim)
-				.filter(option -> !option.isEmpty())
-				.collect(Collectors.toList());
-	}
-
-	private String getFieldText(GridPane form, int row) {
-		return ((TextField) form.getChildren().get(row * 2 + 1)).getText();
-	}
 }

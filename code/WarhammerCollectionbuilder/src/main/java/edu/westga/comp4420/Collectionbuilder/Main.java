@@ -18,6 +18,7 @@ public class Main extends Application {
 	public static final String WINDOW_TITLE = "JavaFX Sample";
 	public static final String MAIN_WINDOW_RESOURCE = "view/codebehind/MainWindow.fxml";
 	public static final String FACTION_LIST_WINDOW_RESOURCE = "view/codebehind/FactionListWindow.fxml";
+	public static final String ADD_UNIT_WINDOW_RESOURCE = "view/codebehind/AddUnitWindow.fxml";
 
 	/**
 	 * JavaFX entry point.

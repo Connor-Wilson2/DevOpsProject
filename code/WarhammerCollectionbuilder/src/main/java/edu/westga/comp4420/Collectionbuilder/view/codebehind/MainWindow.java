@@ -94,17 +94,18 @@ public class MainWindow {
 	}
 
 	private Dialog<FactionList> createListDialog() {
+		LocalDate dateCreated = LocalDate.now();
 		Dialog<FactionList> dialog = new Dialog<>();
 		dialog.setTitle("Create Faction List");
 		dialog.setHeaderText("Enter the list details");
 		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-		GridPane form = this.createListForm();
+		GridPane form = this.createListForm(dateCreated);
 		dialog.getDialogPane().setContent(form);
-		dialog.setResultConverter(button -> this.createListResult(button, form));
+		dialog.setResultConverter(button -> this.createListResult(button, form, dateCreated));
 		return dialog;
 	}
 
-	private GridPane createListForm() {
+	private GridPane createListForm(LocalDate dateCreated) {
 		GridPane form = new GridPane();
 		form.setHgap(10);
 		form.setVgap(10);
@@ -114,15 +115,17 @@ public class MainWindow {
 		form.add(new TextField(), 1, 1);
 		form.add(new Label("Subfaction"), 0, 2);
 		form.add(new TextField(), 1, 2);
+		form.add(new Label("Date created"), 0, 3);
+		form.add(new Label(dateCreated.toString()), 1, 3);
 		return form;
 	}
 
-	private FactionList createListResult(ButtonType button, GridPane form) {
+	private FactionList createListResult(ButtonType button, GridPane form, LocalDate dateCreated) {
 		if (button != ButtonType.OK) {
 			return null;
 		}
 		try {
-			return new FactionList(this.getFieldText(form, 0), LocalDate.now(),
+			return new FactionList(this.getFieldText(form, 0), dateCreated,
 					this.getFieldText(form, 1), this.getFieldText(form, 2));
 		} catch (IllegalArgumentException error) {
 			new Alert(Alert.AlertType.ERROR, error.getMessage()).showAndWait();
