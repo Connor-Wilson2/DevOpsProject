@@ -32,6 +32,6 @@ jobs:
     - name: Build with Maven
       run: |
         echo Testing Project
-        cd "code/Grocery List JavaFX Sample/"
+        cd "code/WarhammerCollectionbuilder/"
         mvn --batch-mode --update-snapshots clean verify
         cd ../..
