@@ -81,6 +81,11 @@ public class FactionListWindow {
 	}
 
 	@FXML
+	void back() {
+		this.units.getScene().getWindow().hide();
+	}
+
+	@FXML
 	void addUnit() {
 		try {
 			FXMLLoader loader = new FXMLLoader(Main.class.getResource(Main.ADD_UNIT_WINDOW_RESOURCE));
