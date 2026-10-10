@@ -94,44 +94,47 @@ import javafx.stage.Stage;
 <span class="nc" id="L94">	}</span>
 
 	private Dialog&lt;FactionList&gt; createListDialog() {
-<span class="nc" id="L97">		Dialog&lt;FactionList&gt; dialog = new Dialog&lt;&gt;();</span>
-<span class="nc" id="L98">		dialog.setTitle(&quot;Create Faction List&quot;);</span>
-<span class="nc" id="L99">		dialog.setHeaderText(&quot;Enter the list details&quot;);</span>
-<span class="nc" id="L100">		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);</span>
-<span class="nc" id="L101">		GridPane form = this.createListForm();</span>
-<span class="nc" id="L102">		dialog.getDialogPane().setContent(form);</span>
-<span class="nc" id="L103">		dialog.setResultConverter(button -&gt; this.createListResult(button, form));</span>
-<span class="nc" id="L104">		return dialog;</span>
+<span class="nc" id="L97">		LocalDate dateCreated = LocalDate.now();</span>
+<span class="nc" id="L98">		Dialog&lt;FactionList&gt; dialog = new Dialog&lt;&gt;();</span>
+<span class="nc" id="L99">		dialog.setTitle(&quot;Create Faction List&quot;);</span>
+<span class="nc" id="L100">		dialog.setHeaderText(&quot;Enter the list details&quot;);</span>
+<span class="nc" id="L101">		dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);</span>
+<span class="nc" id="L102">		GridPane form = this.createListForm(dateCreated);</span>
+<span class="nc" id="L103">		dialog.getDialogPane().setContent(form);</span>
+<span class="nc" id="L104">		dialog.setResultConverter(button -&gt; this.createListResult(button, form, dateCreated));</span>
+<span class="nc" id="L105">		return dialog;</span>
 	}
 
-	private GridPane createListForm() {
-<span class="nc" id="L108">		GridPane form = new GridPane();</span>
-<span class="nc" id="L109">		form.setHgap(10);</span>
-<span class="nc" id="L110">		form.setVgap(10);</span>
-<span class="nc" id="L111">		form.add(new Label(&quot;Title&quot;), 0, 0);</span>
-<span class="nc" id="L112">		form.add(new TextField(), 1, 0);</span>
-<span class="nc" id="L113">		form.add(new Label(&quot;Faction&quot;), 0, 1);</span>
-<span class="nc" id="L114">		form.add(new TextField(), 1, 1);</span>
-<span class="nc" id="L115">		form.add(new Label(&quot;Subfaction&quot;), 0, 2);</span>
-<span class="nc" id="L116">		form.add(new TextField(), 1, 2);</span>
-<span class="nc" id="L117">		return form;</span>
+	private GridPane createListForm(LocalDate dateCreated) {
+<span class="nc" id="L109">		GridPane form = new GridPane();</span>
+<span class="nc" id="L110">		form.setHgap(10);</span>
+<span class="nc" id="L111">		form.setVgap(10);</span>
+<span class="nc" id="L112">		form.add(new Label(&quot;Title&quot;), 0, 0);</span>
+<span class="nc" id="L113">		form.add(new TextField(), 1, 0);</span>
+<span class="nc" id="L114">		form.add(new Label(&quot;Faction&quot;), 0, 1);</span>
+<span class="nc" id="L115">		form.add(new TextField(), 1, 1);</span>
+<span class="nc" id="L116">		form.add(new Label(&quot;Subfaction&quot;), 0, 2);</span>
+<span class="nc" id="L117">		form.add(new TextField(), 1, 2);</span>
+<span class="nc" id="L118">		form.add(new Label(&quot;Date created&quot;), 0, 3);</span>
+<span class="nc" id="L119">		form.add(new Label(dateCreated.toString()), 1, 3);</span>
+<span class="nc" id="L120">		return form;</span>
 	}
 
-	private FactionList createListResult(ButtonType button, GridPane form) {
-<span class="nc bnc" id="L121" title="All 2 branches missed.">		if (button != ButtonType.OK) {</span>
-<span class="nc" id="L122">			return null;</span>
+	private FactionList createListResult(ButtonType button, GridPane form, LocalDate dateCreated) {
+<span class="nc bnc" id="L124" title="All 2 branches missed.">		if (button != ButtonType.OK) {</span>
+<span class="nc" id="L125">			return null;</span>
 		}
 		try {
-<span class="nc" id="L125">			return new FactionList(this.getFieldText(form, 0), LocalDate.now(),</span>
-<span class="nc" id="L126">					this.getFieldText(form, 1), this.getFieldText(form, 2));</span>
-<span class="nc" id="L127">		} catch (IllegalArgumentException error) {</span>
-<span class="nc" id="L128">			new Alert(Alert.AlertType.ERROR, error.getMessage()).showAndWait();</span>
-<span class="nc" id="L129">			return null;</span>
+<span class="nc" id="L128">			return new FactionList(this.getFieldText(form, 0), dateCreated,</span>
+<span class="nc" id="L129">					this.getFieldText(form, 1), this.getFieldText(form, 2));</span>
+<span class="nc" id="L130">		} catch (IllegalArgumentException error) {</span>
+<span class="nc" id="L131">			new Alert(Alert.AlertType.ERROR, error.getMessage()).showAndWait();</span>
+<span class="nc" id="L132">			return null;</span>
 		}
 	}
 
 	private String getFieldText(GridPane form, int row) {
-<span class="nc" id="L134">		return ((TextField) form.getChildren().get(row * 2 + 1)).getText();</span>
+<span class="nc" id="L137">		return ((TextField) form.getChildren().get(row * 2 + 1)).getText();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

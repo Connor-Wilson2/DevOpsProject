@@ -1,10 +1,7 @@
 package edu.westga.comp4420.Collectionbuilder.view.codebehind;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import edu.westga.comp4420.Collectionbuilder.model.Unit;
+import edu.westga.comp4420.Collectionbuilder.view.CreateUnitUtility;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -46,7 +43,9 @@ public class AddUnitWindow {
 	@FXML
 	void done() {
 		try {
-			this.createdUnit = this.createUnit();
+			this.createdUnit = CreateUnitUtility.createUnit(this.nameField.getText(),
+					this.unitTypeField.getText(), this.pointValueField.getText(),
+					this.modelCountField.getText(), this.wargearOptionsField.getText());
 			this.closeWindow();
 		} catch (NumberFormatException error) {
 			new Alert(Alert.AlertType.ERROR, "Point value and model count must be whole numbers.")
@@ -60,23 +59,6 @@ public class AddUnitWindow {
 	void cancel() {
 		this.createdUnit = null;
 		this.closeWindow();
-	}
-
-	private Unit createUnit() {
-		int pointValue = Integer.parseInt(this.pointValueField.getText().trim());
-		int modelCount = Integer.parseInt(this.modelCountField.getText().trim());
-		return new Unit(this.nameField.getText(), this.unitTypeField.getText(), pointValue,
-				modelCount, this.parseWargearOptions(this.wargearOptionsField.getText()));
-	}
-
-	private List<String> parseWargearOptions(String text) {
-		if (text.trim().isEmpty()) {
-			return Arrays.asList();
-		}
-		return Arrays.stream(text.split(","))
-				.map(String::trim)
-				.filter(option -> !option.isEmpty())
-				.collect(Collectors.toList());
 	}
 
 	private void closeWindow() {
