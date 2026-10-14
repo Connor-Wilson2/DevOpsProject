@@ -81,39 +81,44 @@ import javafx.stage.Stage;
 <span class="nc" id="L81">	}</span>
 
 	@FXML
+	void back() {
+<span class="nc" id="L85">		this.units.getScene().getWindow().hide();</span>
+<span class="nc" id="L86">	}</span>
+
+	@FXML
 	void addUnit() {
 		try {
-<span class="nc" id="L86">			FXMLLoader loader = new FXMLLoader(Main.class.getResource(Main.ADD_UNIT_WINDOW_RESOURCE));</span>
-<span class="nc" id="L87">			Parent parent = loader.load();</span>
-<span class="nc" id="L88">			Stage stage = new Stage();</span>
-<span class="nc" id="L89">			stage.setTitle(&quot;Add Unit&quot;);</span>
-<span class="nc" id="L90">			stage.initOwner(this.units.getScene().getWindow());</span>
-<span class="nc" id="L91">			stage.initModality(Modality.APPLICATION_MODAL);</span>
-<span class="nc" id="L92">			stage.setScene(new Scene(parent));</span>
-<span class="nc" id="L93">			stage.showAndWait();</span>
-<span class="nc" id="L94">			Unit newUnit = loader.&lt;AddUnitWindow&gt;getController().getCreatedUnit();</span>
-<span class="nc bnc" id="L95" title="All 2 branches missed.">			if (newUnit != null) {</span>
-<span class="nc" id="L96">				this.factionList.addUnit(newUnit);</span>
-<span class="nc" id="L97">				this.refreshUnits();</span>
+<span class="nc" id="L91">			FXMLLoader loader = new FXMLLoader(Main.class.getResource(Main.ADD_UNIT_WINDOW_RESOURCE));</span>
+<span class="nc" id="L92">			Parent parent = loader.load();</span>
+<span class="nc" id="L93">			Stage stage = new Stage();</span>
+<span class="nc" id="L94">			stage.setTitle(&quot;Add Unit&quot;);</span>
+<span class="nc" id="L95">			stage.initOwner(this.units.getScene().getWindow());</span>
+<span class="nc" id="L96">			stage.initModality(Modality.APPLICATION_MODAL);</span>
+<span class="nc" id="L97">			stage.setScene(new Scene(parent));</span>
+<span class="nc" id="L98">			stage.showAndWait();</span>
+<span class="nc" id="L99">			Unit newUnit = loader.&lt;AddUnitWindow&gt;getController().getCreatedUnit();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">			if (newUnit != null) {</span>
+<span class="nc" id="L101">				this.factionList.addUnit(newUnit);</span>
+<span class="nc" id="L102">				this.refreshUnits();</span>
 			}
-<span class="nc" id="L99">		} catch (IOException error) {</span>
-<span class="nc" id="L100">			new Alert(Alert.AlertType.ERROR, &quot;Unable to open the add-unit window.&quot;).showAndWait();</span>
-<span class="nc" id="L101">		}</span>
-<span class="nc" id="L102">	}</span>
+<span class="nc" id="L104">		} catch (IOException error) {</span>
+<span class="nc" id="L105">			new Alert(Alert.AlertType.ERROR, &quot;Unable to open the add-unit window.&quot;).showAndWait();</span>
+<span class="nc" id="L106">		}</span>
+<span class="nc" id="L107">	}</span>
 
 	@FXML
 	void deleteUnit() {
-<span class="nc" id="L106">		Unit selectedUnit = this.units.getSelectionModel().getSelectedItem();</span>
-<span class="nc bnc" id="L107" title="All 2 branches missed.">		if (selectedUnit != null) {</span>
-<span class="nc" id="L108">			this.factionList.removeUnit(selectedUnit);</span>
-<span class="nc" id="L109">			this.refreshUnits();</span>
+<span class="nc" id="L111">		Unit selectedUnit = this.units.getSelectionModel().getSelectedItem();</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">		if (selectedUnit != null) {</span>
+<span class="nc" id="L113">			this.factionList.removeUnit(selectedUnit);</span>
+<span class="nc" id="L114">			this.refreshUnits();</span>
 		}
-<span class="nc" id="L111">	}</span>
+<span class="nc" id="L116">	}</span>
 
 	private void refreshUnits() {
-<span class="nc" id="L114">		this.displayedUnits.setAll(this.factionList.getUnits());</span>
-<span class="nc" id="L115">		this.pointsTotal.setText(&quot;Total: &quot; + this.factionList.getTotalPoints() + &quot; points&quot;);</span>
-<span class="nc" id="L116">	}</span>
+<span class="nc" id="L119">		this.displayedUnits.setAll(this.factionList.getUnits());</span>
+<span class="nc" id="L120">		this.pointsTotal.setText(&quot;Total: &quot; + this.factionList.getTotalPoints() + &quot; points&quot;);</span>
+<span class="nc" id="L121">	}</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
