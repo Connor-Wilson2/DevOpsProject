@@ -119,6 +119,28 @@ a:hover {
     font-weight: 600;
 }
 
+.screenshot-card {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 0.35rem;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.screenshot-image {
+    background: #e9efec;
+    display: block;
+    height: 220px;
+    object-fit: contain;
+    width: 100%;
+}
+
+.screenshot-card figcaption {
+    color: var(--muted);
+    padding: 0.85rem 1rem;
+}
+
 .notice {
     background: #fff;
     border-left: 4px solid var(--accent);
