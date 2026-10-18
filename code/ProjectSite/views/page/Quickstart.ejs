@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quick Start | Warhammer 40,000 Collection Manager</title>
+    <meta name="description" content="Set up the project site locally and get oriented with the collection manager project.">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/navigation', { activePage: 'documentation' }) %>
+
+    <main class="container page-content">
+        <header class="page-heading">
+            <p class="eyebrow">Documentation / Getting started</p>
+            <h1>Quick start</h1>
+            <p class="lead">Run the project website on your computer and get oriented with the collection manager plan.</p>
+        </header>
+
+        <section class="content-section" aria-labelledby="requirements">
+            <h2 id="requirements">Requirements</h2>
+            <ul>
+                <li>Node.js and npm</li>
+                <li>A terminal in the project repository</li>
+            </ul>
+        </section>
+
+        <section class="content-section" aria-labelledby="run-site">
+            <h2 id="run-site">Run the project site</h2>
+            <ol class="step-list">
+                <li>
+                    <strong>Open the project site directory.</strong>
+                    <pre><code>cd code/ProjectSite</code></pre>
+                </li>
+                <li>
+                    <strong>Install the site dependencies.</strong>
+                    <pre><code>npm install</code></pre>
+                </li>
+                <li>
+                    <strong>Start the local web server.</strong>
+                    <pre><code>node app.js</code></pre>
+                </li>
+                <li>
+                    <strong>Open the site.</strong>
+                    Visit <a href="http://localhost:8080">http://localhost:8080</a> in your browser.
+                </li>
+            </ol>
+        </section>
+
+        <div class="notice" role="note">
+            <strong>About the application:</strong> The site is project documentation. The Java collection manager described here is planned work and is not launched by these steps.
+        </div>
+
+        <section class="content-section" aria-labelledby="next-steps">
+            <h2 id="next-steps">Next steps</h2>
+            <p>Visit the <a href="/documentation">feature guides</a> to read about collection records, faction organization, models and wargear, reports, search, and data storage.</p>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container"><a href="/">Warhammer 40,000 Collection Manager</a> &middot; <a href="/documentation">Documentation</a></div>
+    </footer>
+</body>
+</html>
