@@ -1,35 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Comp 4420 Phone Number Checker</title>
-    <meta name="description" content="Project 3 Starter for Comp 4420 University of West Georgia Fall 2026">
-    <meta name="Connor Wilson" content="Comp 4420">
-    <!-- Bootstrap CSS Reset -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Documentation | Warhammer 40,000 Collection Manager</title>
+    <meta name="description" content="Quick start and feature guides for the Warhammer 40,000 Collection Manager project.">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
 </head>
 <body>
- <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
-          <ul class="navbar-nav">
-            <li class="nav-item active">
-              <a class="nav-link" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/tests">Test Cases</a>
-            </li>
-          </ul>
-    </nav>
- <!-- Content -->
-    <div class="container">
-        <form action="/api/check_phone_number" method="POST">
-          Phone Number: <input type="text" name="number" required><br>
-         <button type="submit">Check Phone Number</button>
-        </form>
-    </div>
+    <%- include('../partials/navigation', { activePage: 'documentation' }) %>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
+    <main class="container page-content">
+        <header class="page-heading">
+            <p class="eyebrow">Project guides</p>
+            <h1>Documentation</h1>
+            <p class="lead">Start with the project setup, then explore the planned features of the collection manager.</p>
+        </header>
+
+        <section class="content-section" aria-labelledby="getting-started">
+            <h2 id="getting-started">Getting started</h2>
+            <article class="feature-card">
+                <h3><a href="/documentation/quickstart">Quick start guide</a></h3>
+                <p>Run this documentation site locally and learn what the project is designed to do.</p>
+                <a class="text-link" href="/documentation/quickstart">Open the quick start <span aria-hidden="true">&rarr;</span></a>
+            </article>
+        </section>
+
+        <section class="content-section" aria-labelledby="feature-guides">
+            <h2 id="feature-guides">Feature guides</h2>
+            <p>These guides describe the application features planned in the project proposal.</p>
+            <div class="row">
+                <% Object.keys(features).forEach(function(slug) { var feature = features[slug]; %>
+                    <div class="col-md-6 col-lg-4 mb-3">
+                        <article class="feature-card h-100">
+                            <h3><a href="/documentation/features/<%= slug %>"><%= feature.title %></a></h3>
+                            <p><%= feature.summary %></p>
+                            <a class="text-link" href="/documentation/features/<%= slug %>">Read feature guide <span aria-hidden="true">&rarr;</span></a>
+                        </article>
+                    </div>
+                <% }); %>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container"><a href="/">Warhammer 40,000 Collection Manager</a> &middot; Documentation</div>
+    </footer>
 </body>
 </html>
