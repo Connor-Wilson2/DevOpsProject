@@ -1,0 +1,44 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Node.js CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-node:
+
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [24.21.0]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+        cache-dependency-path: 'code/ProjectSite/package-lock.json' 
+    - name: Pin npm version
+      run: npm install -g npm@11.19.0
+    - run: |
+        echo Running Automated Install Process for Project
+        cd "code/ProjectSite/"
+        npm ci
+        cd ../..
+    - run: |
+        echo Building Project
+        cd "code/ProjectSite/"
+        npm run build --if-present
+        cd ../..
+    - run: |
+        echo Testing Project
+        cd "code/ProjectSite/"
+        npm test
+        cd ../..
