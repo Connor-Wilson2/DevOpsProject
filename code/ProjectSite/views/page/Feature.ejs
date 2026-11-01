@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= feature.title %> | Warhammer 40,000 Collection Manager</title>
+    <meta name="description" content="<%= feature.summary %>">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/navigation', { activePage: 'documentation' }) %>
+
+    <main class="container page-content">
+        <header class="page-heading">
+            <p class="eyebrow"><a href="/documentation">Documentation</a> / Feature guide</p>
+            <h1><%= feature.title %></h1>
+            <p class="lead"><%= feature.summary %></p>
+        </header>
+
+        <section class="content-section" aria-labelledby="planned-capabilities">
+            <h2 id="planned-capabilities">Planned capabilities</h2>
+            <ul>
+                <% feature.details.forEach(function(detail) { %>
+                    <li><%= detail %></li>
+                <% }); %>
+            </ul>
+        </section>
+
+        <div class="notice" role="note">
+            This guide describes the proposed project scope. The collection manager is planned work and these capabilities are not yet available in this site.
+        </div>
+
+        <p class="content-section"><a href="/documentation">&larr; Back to all documentation</a></p>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container"><a href="/">Warhammer 40,000 Collection Manager</a> &middot; <a href="/documentation">Documentation</a></div>
+    </footer>
+</body>
+</html>

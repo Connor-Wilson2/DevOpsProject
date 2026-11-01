@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane minHeight="390.0" minWidth="460.0" prefHeight="430.0" prefWidth="520.0"
+            style="-fx-background-color: #f1f2ed;"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="edu.westga.comp4420.Collectionbuilder.view.codebehind.AddUnitWindow">
+   <top>
+      <VBox spacing="6.0" style="-fx-background-color: #26352f;">
+         <padding>
+            <Insets top="20.0" right="24.0" bottom="18.0" left="24.0" />
+         </padding>
+         <Label text="FACTION LIST" textFill="#d2a36b">
+            <font>
+               <Font name="System Bold" size="12.0" />
+            </font>
+         </Label>
+         <Label text="Add a unit" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="23.0" />
+            </font>
+         </Label>
+      </VBox>
+   </top>
+   <center>
+      <GridPane hgap="12.0" vgap="13.0">
+         <padding>
+            <Insets top="24.0" right="24.0" bottom="20.0" left="24.0" />
+         </padding>
+         <Label text="Name" GridPane.rowIndex="0" />
+         <TextField fx:id="nameField" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+         <Label text="Unit type" GridPane.rowIndex="1" />
+         <TextField fx:id="unitTypeField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+         <Label text="Point value" GridPane.rowIndex="2" />
+         <TextField fx:id="pointValueField" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         <Label text="Model count" GridPane.rowIndex="3" />
+         <TextField fx:id="modelCountField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         <Label text="Wargear options" GridPane.rowIndex="4" />
+         <TextField fx:id="wargearOptionsField" promptText="Separate options with commas"
+                    GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      </GridPane>
+   </center>
+   <bottom>
+      <HBox alignment="CENTER_RIGHT" spacing="10.0">
+         <padding>
+            <Insets top="8.0" right="24.0" bottom="20.0" left="24.0" />
+         </padding>
+         <Button mnemonicParsing="false" onAction="#cancel" text="Cancel"
+                 style="-fx-background-color: #e1e4df; -fx-text-fill: #26352f;" />
+         <Button fx:id="doneButton" defaultButton="true" mnemonicParsing="false" onAction="#done"
+                 text="Done" style="-fx-background-color: #a45135; -fx-text-fill: white; -fx-font-weight: bold;" />
+      </HBox>
+   </bottom>
+</BorderPane>

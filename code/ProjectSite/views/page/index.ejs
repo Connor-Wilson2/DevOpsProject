@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Warhammer 40,000 Collection Manager</title>
+    <meta name="description" content="Project overview for a Warhammer 40,000 miniature collection manager.">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
+</head>
+<body>
+    <%- include('../partials/navigation', { activePage: 'home' }) %>
+
+    <main class="container page-content">
+        <section class="hero">
+            <p class="eyebrow">Warhammer 40,000 Collection Manager</p>
+            <h1>Your collection, organized for the tabletop.</h1>
+            <p class="lead">A project to help players catalog their miniatures, keep track of unit equipment, and see which army configurations their collection can support.</p>
+            <a class="btn btn-primary btn-lg" href="/documentation">Explore the documentation</a>
+            <a class="btn btn-outline-secondary btn-lg ml-sm-2 mt-2 mt-sm-0" href="/documentation/quickstart">Read the quick start</a>
+            <a class="btn btn-outline-secondary btn-lg ml-sm-2 mt-2 mt-sm-0" href="https://github.com/Connor-Wilson2/DevOpsProject" target="_blank" rel="noopener noreferrer">View project on GitHub</a>
+        </section>
+
+        <section class="content-section" aria-labelledby="project-overview">
+            <h2 id="project-overview">About the project</h2>
+            <p>The planned Java application will let players record each unit they own, including its faction, model count, and individual model wargear. Collection data will be stored in a database, with validation to help keep records consistent.</p>
+            <p>Faction-based reports, along with search and filtering, are intended to make it easier to find units and understand the configurations available when building an army list.</p>
+            <div class="notice" role="note">
+                <strong>Project status:</strong> This site describes the planned application and its features. It is a project overview, not the collection manager itself.
+            </div>
+        </section>
+
+        <section class="content-section" aria-labelledby="project-features">
+            <h2 id="project-features">What it aims to do</h2>
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <article class="feature-card h-100">
+                        <h3>Catalog your units</h3>
+                        <p>Record factions, unit names, and the models in each unit.</p>
+                    </article>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <article class="feature-card h-100">
+                        <h3>Track equipment</h3>
+                        <p>Keep wargear options associated with the models in your collection.</p>
+                    </article>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <article class="feature-card h-100">
+                        <h3>Plan with reports</h3>
+                        <p>Review faction-grouped units and the configurations you can field.</p>
+                    </article>
+                </div>
+            </div>
+            <a href="/documentation">Browse all feature guides <span aria-hidden="true">&rarr;</span></a>
+        </section>
+
+        <section class="content-section" aria-labelledby="application-preview">
+            <h2 id="application-preview">Application screenshots</h2>
+            <p>Explore screenshots of the collection manager interface, including faction lists, unit lists, and adding units.</p>
+            <div class="row">
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <figure class="screenshot-card">
+                        <img class="screenshot-image" src="/images/home%20page.png" alt="Faction collections page with no saved lists" loading="lazy">
+                        <figcaption>Faction collections with no lists saved yet.</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <figure class="screenshot-card">
+                        <img class="screenshot-image" src="/images/home%20page%20with%20a%20faction%20list.png" alt="Faction collections page showing a saved Space Marine list" loading="lazy">
+                        <figcaption>Faction collections with a saved list.</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <figure class="screenshot-card">
+                        <img class="screenshot-image" src="/images/unit%20list%20blank.png" alt="An army list with no units added" loading="lazy">
+                        <figcaption>An army list ready for units to be added.</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <figure class="screenshot-card">
+                        <img class="screenshot-image" src="/images/unit%20list%20page%20with%20an%20item%20included.png" alt="An army list displaying a unit and its model, point, and wargear details" loading="lazy">
+                        <figcaption>An army list showing a unit and its details.</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <figure class="screenshot-card">
+                        <img class="screenshot-image" src="/images/create%20unit%20tab.png" alt="Army lists page with no saved lists" loading="lazy">
+                        <figcaption>The army lists page before any lists are created.</figcaption>
+                    </figure>
+                </div>
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <figure class="screenshot-card">
+                        <img class="screenshot-image" src="/images/create%20faction%20list.png" alt="Add a unit form with fields for name, type, points, model count, and wargear options" loading="lazy">
+                        <figcaption>The form for adding a unit and its options.</figcaption>
+                    </figure>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">Warhammer 40,000 Collection Manager &middot; Project overview and documentation</div>
+    </footer>
+</body>
+</html>

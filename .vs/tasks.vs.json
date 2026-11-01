@@ -1,0 +1,10 @@
+{
+  "version": "0.2.1",
+  "tasks": [
+    {
+      "taskLabel": "task-Unit,java",
+      "appliesTo": "code/WarhammerCollectionbuilder/src/main/java/edu/westga/comp4420/Collectionbuilder/model/Unit,java",
+      "type": "launch"
+    }
+  ]
+}
