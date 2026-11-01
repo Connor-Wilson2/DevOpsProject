@@ -2,6 +2,11 @@ const path = require('path');
 const crypto = require('crypto');
 const sqlite3 = require('sqlite3').verbose();
 const express = require('express');
+const {
+	authenticateAccount,
+	initializeDatabase,
+	registerAccount
+} = require('./login-utilies');
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -28,7 +33,6 @@ function run(sql, params = []) {
 		});
 	});
 }
-
 function get(sql, params = []) {
 	return new Promise((resolve, reject) => {
 		db.get(sql, params, (err, row) => {
@@ -52,44 +56,11 @@ function all(sql, params = []) {
 		});
 	});
 }
-
-async function initializeDatabase() {
-	await run(
-		'CREATE TABLE IF NOT EXISTS accounts (username TEXT PRIMARY KEY, password TEXT NOT NULL)'
-	);
-
-	const columns = await all('PRAGMA table_info(accounts)');
-	const columnNames = columns.map((column) => column.name);
-	if (columnNames.length === 2 && columnNames[0] === 'username' && columnNames[1] === 'password') {
-		return;
-	}
-	if (!columnNames.includes('username') || !columnNames.includes('password')) {
-		throw new Error('The accounts table must contain username and password columns.');
-	}
-
-	await run('BEGIN TRANSACTION');
-	try {
-		await run(
-			'CREATE TABLE accounts_new (username TEXT PRIMARY KEY, password TEXT NOT NULL)'
-		);
-		await run(
-			'INSERT INTO accounts_new (username, password) SELECT username, password FROM accounts'
-		);
-		await run('DROP TABLE accounts');
-		await run('ALTER TABLE accounts_new RENAME TO accounts');
-		await run('COMMIT');
-	} catch (err) {
-		await run('ROLLBACK');
-		throw err;
-	}
-}
-
 function createSession(res, username) {
 	const sessionId = crypto.randomBytes(32).toString('hex');
 	sessions.set(sessionId, username);
 	res.setHeader('Set-Cookie', `todo_app_session=${sessionId}; HttpOnly; SameSite=Lax; Path=/`);
 }
-
 function getSessionUsername(req) {
 	const cookieHeader = req.headers.cookie || '';
 	const match = cookieHeader.match(/(?:^|;\s*)todo_app_session=([a-f0-9]+)/);
@@ -109,26 +80,19 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', async (req, res) => {
-	const username = typeof req.body.username === 'string' ? req.body.username.trim() : '';
-	const password = typeof req.body.password === 'string' ? req.body.password : '';
-
-	if (!username || !password) {
-		return res.status(400).render('page/login', {
-			error: 'Enter both your username and password.'
-		});
-	}
-
 	try {
-		const account = await get(
-			'SELECT username FROM accounts WHERE username = ? AND password = ?',
-			[username, password]
-		);
-		if (!account) {
+		const result = await authenticateAccount(req.body, get);
+		if (result.status === 'missing-credentials') {
+			return res.status(400).render('page/login', {
+				error: 'Enter both your username and password.'
+			});
+		}
+		if (result.status === 'invalid-credentials') {
 			return res.status(401).render('page/login', {
 				error: 'The username or password is incorrect.'
 			});
 		}
-		createSession(res, account.username);
+		createSession(res, result.username);
 		return res.redirect('/');
 	} catch (err) {
 		console.error('Login failed:', err.message);
@@ -143,25 +107,22 @@ app.get(['/createaccount', '/create-account'], (req, res) => {
 });
 
 async function createAccount(req, res) {
-	const username = typeof req.body.username === 'string' ? req.body.username.trim() : '';
-	const password = typeof req.body.password === 'string' ? req.body.password : '';
-
-	if (!username || !password) {
-		return res.status(400).render('page/createaccount', {
-			error: 'Enter both a username and password.'
-		});
-	}
-
 	try {
-		await run('INSERT INTO accounts (username, password) VALUES (?, ?)', [username, password]);
-		createSession(res, username);
-		return res.redirect('/');
-	} catch (err) {
-		if (err.code === 'SQLITE_CONSTRAINT') {
+		const result = await registerAccount(req.body, run);
+		if (result.status === 'missing-credentials') {
+			return res.status(400).render('page/createaccount', {
+				error: 'Enter both a username and password.'
+			});
+		}
+		if (result.status === 'username-taken') {
 			return res.status(409).render('page/createaccount', {
 				error: 'That username is already in use. Choose another username.'
 			});
 		}
+
+		createSession(res, result.username);
+		return res.redirect('/');
+	} catch (err) {
 		console.error('Account creation failed:', err.message);
 		return res.status(500).render('page/createaccount', {
 			error: 'Unable to create your account right now. Please try again later.'
@@ -171,7 +132,7 @@ async function createAccount(req, res) {
 
 app.post(['/createaccount', '/create-account', '/api/add_account'], createAccount);
 
-initializeDatabase()
+initializeDatabase(run, all)
 	.then(() => {
 		app.listen(port, () => {
 			console.log(`App listening on port ${port}!`);
